@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_image">
+    
+    <include layout="@layout/toolbar" android:id="@+id/movie_details_toolbar"></include>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/movie_details_toolbar">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:id="@+id/first_layout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <ImageView
+                    android:id="@+id/movie_details_poster"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/movie_details_background"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="#80000000">
+
+                    <TextView
+                        android:id="@+id/movie_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="25dp"
+                        android:text="Inception"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/movie_gener"
+                        android:layout_width="225dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/movie_name"
+                        android:layout_below="@+id/movie_name"
+                        android:text="sci-fi, crime, action"
+                        android:textSize="14sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"/>
+
+                    <TextView
+                        android:id="@+id/release_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/movie_name"
+                        android:layout_alignTop="@+id/movie_name"
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        android:text="(2010)"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/rating_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rating"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"
+                        android:layout_alignStart="@+id/rating_layout"
+                        android:layout_above="@+id/rating_layout"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textStyle="bold"
+                        android:layout_toRightOf="@+id/rating_text"
+                        android:layout_above="@+id/popularity_layout"
+                        android:text="popularity"
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_alignStart="@id/rating_layout"/>
+
+                    <!--<RelativeLayout
+                        android:id="@+id/popularity_layout"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/poligon">
+
+                    </RelativeLayout>-->
+
+                    <RelativeLayout
+                        android:id="@+id/rating_layout"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/movie_gener"
+                        android:background="@drawable/circle"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="0dp">
+
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="8.0"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-thin"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/popularity_layout"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_toRightOf="@+id/rating_layout"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/poligon">
+
+                        <TextView
+                            android:id="@+id/popularity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="61%"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-thin"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/second_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/first_layout">
+
+                <TextView
+                    android:id="@+id/movie_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. "
+                    android:layout_margin="10dp"
+                    android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_below="@+id/movie_description"
+                    android:background="#BDBDBD"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"></LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/third_layout"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:layout_below="@+id/second_layout"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Production Company"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/production_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Royal Pictures"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-thin"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Budget"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/Budget_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$ 1600000"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-thin"
+                        android:text="Production Country"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/production_country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Royal Pictures"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-thin"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Language"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="sans-serif-thin"
+                        android:textSize="13sp"/>
+                    <TextView
+                        android:id="@+id/language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-thin"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/third_layout"
+                android:background="#BDBDBD"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"></LinearLayout>
+
+        </RelativeLayout>
+        
+    </ScrollView>
+    
+</RelativeLayout>
