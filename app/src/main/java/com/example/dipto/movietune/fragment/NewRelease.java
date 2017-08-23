@@ -6,11 +6,13 @@ package com.example.dipto.movietune.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,10 +46,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListener {
 
     public NewRelease(){
-
     }
 
     @Override
@@ -57,15 +60,23 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
     RecyclerView new_release_recyler;
     NewReleaseAdapter newReleaseAdapter ;
     List<NewReleaseModel> list ;
-    int page_int = 1 ;
+    int page_int = 1, network_flag = 0 ;
     String new_release_page ;
     GridLayoutManager gridlayoutmanager ;
+    AlertDialog.Builder internet_connection_failed ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_new_release, container, false);
         new_release_recyler = (RecyclerView) view.findViewById(R.id.new_release_recyler);
+        Constant constant = new Constant(getActivity()) ;
+        network_flag = constant.isNetworkActive() ;
+        /*if(network_flag == 0){
+            internetConnectFailedMessage();
+            AlertDialog alertDialog = internet_connection_failed.create() ;
+            alertDialog.show();
+        }*/
         return view ;
     }
 
@@ -73,6 +84,9 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = new ArrayList<>() ;
+        Constant constant = new Constant(getActivity()) ;
+        network_flag = constant.isNetworkActive() ;
+
         gridlayoutmanager = new GridLayoutManager(getActivity(), 2);
         new_release_recyler.setLayoutManager(gridlayoutmanager);
         newReleaseAdapter = new NewReleaseAdapter(getActivity(), list) ;
@@ -91,11 +105,20 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
             }
         });
 
-        new_release_page = Integer.toString(page_int) ;
-        Log.d("++++TAG+++", "asche");
-        String api_key = Constant.API_KEY ;
-        ApiTaskNewRelease apiTaskNewRelease = new ApiTaskNewRelease(getActivity()) ;
-        apiTaskNewRelease.execute(api_key, new_release_page);
+        if(network_flag == 1)
+        {
+            new_release_page = Integer.toString(page_int) ;
+            Log.d("++++TAG+++", "asche");
+            String api_key = Constant.API_KEY ;
+            ApiTaskNewRelease apiTaskNewRelease = new ApiTaskNewRelease(getActivity()) ;
+            apiTaskNewRelease.execute(api_key, new_release_page);
+        }
+        else{
+
+            internetConnectFailedMessage();
+            AlertDialog alertDialog = internet_connection_failed.create() ;
+            alertDialog.show();
+        }
     }
 
     @Override
@@ -204,5 +227,17 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
                 Log.d("JSONException :", String.valueOf(e)) ;
             }
         }
+    }
+
+    private void internetConnectFailedMessage(){
+        internet_connection_failed = new AlertDialog.Builder(getActivity());
+        internet_connection_failed.setTitle("Warning!") ;
+        internet_connection_failed.setMessage("Please Check Your Internet Connection") ;
+        internet_connection_failed.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package com.example.dipto.movietune.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -51,9 +53,10 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
     RecyclerView top_rated_recyler;
     TopRatedAdapter topRatedAdapter ;
     List<TopRatedModel> list ;
-    int page_int = 1 ;
+    int page_int = 1, network_flag = 0 ;
     String top_rated_page ;
     GridLayoutManager gridlayoutmanager ;
+    AlertDialog.Builder internet_connection_failed ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,6 +75,9 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = new ArrayList<>() ;
+        Constant constant = new Constant(getActivity()) ;
+        network_flag = constant.isNetworkActive() ;
+
         gridlayoutmanager = new GridLayoutManager(getActivity(), 2);
         top_rated_recyler.setLayoutManager(gridlayoutmanager);
         topRatedAdapter = new TopRatedAdapter(getActivity(), list) ;
@@ -90,11 +96,18 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
             }
         });
 
-        top_rated_page = Integer.toString(page_int) ;
-        Log.d("++++TAG+++", "asche");
-        String api_key = Constant.API_KEY ;
-        ApiTaskTopRated apiTaskTopRated = new ApiTaskTopRated(getActivity()) ;
-        apiTaskTopRated.execute(api_key, top_rated_page);
+        if(network_flag == 1) {
+            top_rated_page = Integer.toString(page_int) ;
+            Log.d("++++TAG+++", "asche");
+            String api_key = Constant.API_KEY ;
+            ApiTaskTopRated apiTaskTopRated = new ApiTaskTopRated(getActivity()) ;
+            apiTaskTopRated.execute(api_key, top_rated_page);
+        }
+        else{
+            internetConnectFailedMessage();
+            AlertDialog alertDialog = internet_connection_failed.create() ;
+            alertDialog.show();
+        }
     }
 
     @Override
@@ -200,5 +213,16 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
                 Log.d("JSONException :", String.valueOf(e)) ;
             }
         }
+    }
+    private void internetConnectFailedMessage(){
+        internet_connection_failed = new AlertDialog.Builder(getActivity());
+        internet_connection_failed.setTitle("Warning!") ;
+        internet_connection_failed.setMessage("Please Check Your Internet Connection") ;
+        internet_connection_failed.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 }

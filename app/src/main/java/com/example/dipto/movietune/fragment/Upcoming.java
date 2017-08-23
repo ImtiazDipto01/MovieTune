@@ -5,10 +5,12 @@ package com.example.dipto.movietune.fragment;
  */
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,9 +51,10 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
     RecyclerView upcoming_recyler;
     UpcomingAdapter upcomingAdapter ;
     List<UpcomingModel> list ;
-    int page_int = 1 ;
+    int page_int = 1, network_flag = 0 ;
     String upcoimg_page ;
     GridLayoutManager gridlayoutmanager ;
+    AlertDialog.Builder internet_connection_failed ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +73,9 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        Constant constant = new Constant(getActivity()) ;
+        network_flag = constant.isNetworkActive() ;
 
         list = new ArrayList<>() ;
         gridlayoutmanager = new GridLayoutManager(getActivity(), 2);
@@ -90,11 +96,19 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
             }
         });
 
-        upcoimg_page = Integer.toString(page_int) ;
-        Log.d("++++TAG+++", "asche");
-        String api_key = Constant.API_KEY ;
-        ApiUpcoming apiUpcoming = new ApiUpcoming(getActivity()) ;
-        apiUpcoming.execute(api_key, upcoimg_page);
+        if(network_flag == 1){
+            upcoimg_page = Integer.toString(page_int) ;
+            Log.d("++++TAG+++", "asche");
+            String api_key = Constant.API_KEY ;
+            ApiUpcoming apiUpcoming = new ApiUpcoming(getActivity()) ;
+            apiUpcoming.execute(api_key, upcoimg_page);
+        }
+        else{
+            internetConnectFailedMessage();
+            AlertDialog alertDialog = internet_connection_failed.create() ;
+            alertDialog.show();
+        }
+
     }
 
     @Override
@@ -103,6 +117,8 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
     }
 
     public class ApiUpcoming extends AsyncTask<String, Void, String> {
+
+
 
         String new_release_url = "https://api.themoviedb.org/3/movie/upcoming" ;
         Context context ;
@@ -200,5 +216,16 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
                 Log.d("JSONException :", String.valueOf(e)) ;
             }
         }
+    }
+    private void internetConnectFailedMessage(){
+        internet_connection_failed = new AlertDialog.Builder(getActivity());
+        internet_connection_failed.setTitle("Warning!") ;
+        internet_connection_failed.setMessage("Please Check Your Internet Connection") ;
+        internet_connection_failed.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
     }
 }
