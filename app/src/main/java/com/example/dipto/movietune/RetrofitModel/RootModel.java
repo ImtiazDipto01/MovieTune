@@ -13,23 +13,26 @@ public class RootModel {
     @SerializedName("original_title")
     private String original_title;
 
+    @SerializedName("original_language")
+    private String original_language ;
+
     @SerializedName("overview")
     private String overview;
 
     @SerializedName("popularity")
-    private String popularity;
+    private double popularity;
 
-    @SerializedName("backdrop_path")
+    @SerializedName("poster_path")
     private String backdrop_path;
 
     @SerializedName("release_date")
     private String release_date;
 
     @SerializedName("budget")
-    private String budget;
+    private long budget;
 
     @SerializedName("vote_average")
-    private String vote_average;
+    private double vote_average;
 
     @SerializedName("genres")
     private List<Genres> genres ;
@@ -56,12 +59,12 @@ public class RootModel {
         this.overview = overview;
     }
 
-    public String getPopularity() {
+    public double getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(String popularity) {
-        this.popularity = popularity;
+    public void setPopularity(double popularity) {
+        this.popularity = popularity ;
     }
 
     public String getBackdrop_path() {
@@ -80,19 +83,19 @@ public class RootModel {
         this.release_date = release_date;
     }
 
-    public String getBudget() {
+    public long getBudget() {
         return budget;
     }
 
-    public void setBudget(String budget) {
+    public void setBudget(long budget) {
         this.budget = budget;
     }
 
-    public String getVote_average() {
+    public double getVote_average() {
         return vote_average;
     }
 
-    public void setVote_average(String vote_average) {
+    public void setVote_average(double vote_average) {
         this.vote_average = vote_average;
     }
 
@@ -118,5 +121,13 @@ public class RootModel {
 
     public void setProduction_countries(List<ProductionCountry> production_countries) {
         this.production_countries = production_countries;
+    }
+
+    public String getOriginal_language() {
+        return original_language;
+    }
+
+    public void setOriginal_language(String original_language) {
+        this.original_language = original_language;
     }
 }

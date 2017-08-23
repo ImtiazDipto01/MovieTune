@@ -3,6 +3,7 @@ package com.example.dipto.movietune.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import com.example.dipto.movietune.Constant;
 import com.example.dipto.movietune.EndlessRecyclerViewScrollListener;
 import com.example.dipto.movietune.R;
+import com.example.dipto.movietune.activity.MovieDetailsActivity;
 import com.example.dipto.movietune.adapter.TopRatedAdapter;
 import com.example.dipto.movietune.model.TopRatedModel;
 
@@ -50,6 +52,7 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
     public TopRated(){
 
     }
+
     RecyclerView top_rated_recyler;
     TopRatedAdapter topRatedAdapter ;
     List<TopRatedModel> list ;
@@ -75,6 +78,7 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         list = new ArrayList<>() ;
+
         Constant constant = new Constant(getActivity()) ;
         network_flag = constant.isNetworkActive() ;
 
@@ -112,7 +116,11 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
 
     @Override
     public void itemClicked(View view, int position) {
-
+        Intent intent = new Intent(getActivity(), MovieDetailsActivity.class) ;
+        TopRatedModel topRatedModel = list.get(position) ;
+        Log.d("+++MOVIE_ID+++", topRatedModel.getMovie_id()) ;
+        intent.putExtra("id", topRatedModel.getMovie_id()) ;
+        startActivity(intent);
     }
 
     public class ApiTaskTopRated extends AsyncTask<String, Void, String> {
@@ -198,10 +206,14 @@ public class TopRated extends Fragment implements TopRatedAdapter.ClickListener{
 
                     JSONObject new_movie_obj = main_array.getJSONObject(i) ;
                     String movie_poster = new_movie_obj.getString("poster_path") ;
-                    String movie_id = new_movie_obj.getString("id") ;
+                    int movie_id = new_movie_obj.getInt("id") ;
+                    String movie_id_string = Integer.toString(movie_id) ;
+
+                    Log.d("+++poster_path+++",movie_poster) ;
+
                     TopRatedModel topRatedModel = new TopRatedModel() ;
                     topRatedModel.setMovie_poster(movie_poster);
-                    topRatedModel.setMovie_id(movie_id);
+                    topRatedModel.setMovie_id(movie_id_string);
                     list.add(topRatedModel) ;
                 }
 

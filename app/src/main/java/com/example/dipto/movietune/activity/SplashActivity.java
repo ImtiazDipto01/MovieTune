@@ -14,6 +14,7 @@ import com.example.dipto.movietune.R;
 
 public class SplashActivity extends AppCompatActivity {
 
+    Thread mythread ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
-        Thread mythread = new Thread(){
+        mythread = new Thread(){
             @Override
             public void run() {
                 try {
@@ -35,11 +36,17 @@ public class SplashActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class) ;
                     startActivity(intent);
+                    finish();
                 }
             }
         };
 
         mythread.start();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(2);
     }
 
     private void setupViewPager(ViewPager viewPager){
@@ -91,5 +92,10 @@ public class HomeActivity extends AppCompatActivity {
     private void showCustomToolbar(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

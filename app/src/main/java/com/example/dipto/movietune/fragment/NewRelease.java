@@ -125,7 +125,9 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
     public void itemClicked(View view, int position) {
         Intent intent = new Intent(getActivity(), MovieDetailsActivity.class) ;
         NewReleaseModel newReleaseModel = list.get(position) ;
-        intent.putExtra("id", newReleaseModel.getMovie_id()) ;
+        Log.d("+++MOVIE_ID+++", newReleaseModel.getMovie_id()) ;
+        String id = newReleaseModel.getMovie_id() ;
+        intent.putExtra("id", id) ;
         startActivity(intent);
     }
 
@@ -212,10 +214,11 @@ public class NewRelease extends Fragment implements NewReleaseAdapter.ClickListe
 
                     JSONObject new_movie_obj = main_array.getJSONObject(i) ;
                     String movie_poster = new_movie_obj.getString("poster_path") ;
-                    String movie_id = new_movie_obj.getString("id") ;
+                    int movie_id = new_movie_obj.getInt("id") ;
+                    String movie_id_string = Integer.toString(movie_id) ;
                     NewReleaseModel newReleaseModel = new NewReleaseModel() ;
                     newReleaseModel.setMovie_poster(movie_poster);
-                    newReleaseModel.setMovie_id(movie_id);
+                    newReleaseModel.setMovie_id(movie_id_string);
                     list.add(newReleaseModel) ;
                 }
 

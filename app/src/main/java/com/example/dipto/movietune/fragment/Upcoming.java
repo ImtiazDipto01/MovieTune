@@ -6,6 +6,7 @@ package com.example.dipto.movietune.fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import com.example.dipto.movietune.Constant;
 import com.example.dipto.movietune.EndlessRecyclerViewScrollListener;
 import com.example.dipto.movietune.R;
+import com.example.dipto.movietune.activity.MovieDetailsActivity;
 import com.example.dipto.movietune.adapter.UpcomingAdapter;
 import com.example.dipto.movietune.model.UpcomingModel;
 
@@ -114,6 +116,11 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
     @Override
     public void itemClicked(View view, int position) {
 
+        Intent intent = new Intent(getActivity(), MovieDetailsActivity.class) ;
+        UpcomingModel upcomingModel = list.get(position) ;
+        Log.d("+++MOVIE_ID+++", upcomingModel.getMovie_id()) ;
+        intent.putExtra("id", upcomingModel.getMovie_id()) ;
+        startActivity(intent);
     }
 
     public class ApiUpcoming extends AsyncTask<String, Void, String> {
@@ -201,10 +208,11 @@ public class Upcoming extends Fragment implements UpcomingAdapter.ClickListener 
 
                     JSONObject new_movie_obj = main_array.getJSONObject(i) ;
                     String movie_poster = new_movie_obj.getString("poster_path") ;
-                    String movie_id = new_movie_obj.getString("id") ;
+                    int movie_id = new_movie_obj.getInt("id") ;
+                    String movie_id_string = Integer.toString(movie_id) ;
                     UpcomingModel upcomingModel = new UpcomingModel() ;
                     upcomingModel.setMovie_poster(movie_poster);
-                    upcomingModel.setMovie_id(movie_id);
+                    upcomingModel.setMovie_id(movie_id_string);
                     list.add(upcomingModel) ;
                 }
 

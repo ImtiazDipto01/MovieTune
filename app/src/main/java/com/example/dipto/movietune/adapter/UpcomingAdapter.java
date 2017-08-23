@@ -64,6 +64,14 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.Upcomi
         public UpcomingViewHolder(View itemView) {
             super(itemView);
             upcomingimg = (ImageView) itemView.findViewById(R.id.upcoming_img);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(clickListener != null){
+                        clickListener.itemClicked(v, getPosition());
+                    }
+                }
+            });
         }
     }
     public interface ClickListener{
